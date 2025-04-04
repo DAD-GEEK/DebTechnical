@@ -5,5 +5,5 @@ class Item:
         self.regla_precio = manejador_reglas.obtener_regla(producto.sku)
         self.valor_total_item = self.calcular_total()
 
-    def calcular_total(self):#usado
+    def calcular_total(self):
         return self.regla_precio.calcular_total(self.cantidad, self.producto.precio_unitario)

@@ -10,29 +10,28 @@ tienda_service = TiendaService()
 def startup_event():
     tienda_service.tienda = inicializador_service().inicializador()
 
-@app.get("/health/") ##verificar que la api este funcionando
+@app.get("/health/")
 def health_check():
     return {"status": "Hello Robot!"}
 
-@app.post("/usuario/")##permitir agregar usuarios
+@app.post("/usuario/")
 def registrar_usuario(nombre: str):
     return tienda_service.registrar_usuario(nombre)
 
-@app.post("/producto/") ##permitir agregar productos
+@app.post("/producto/")
 def agregar_producto(sku: str, nombre: str, descripcion: str, unidades: int, precio: float):
     return tienda_service.agregar_producto(sku, nombre, descripcion, unidades, precio)
 
-@app.get("/usuarios") ##permitir obtener todos los usuarios
+@app.get("/usuarios")
 def obtener_usuarios():
     return tienda_service.tienda.usuarios
 
 
-@app.get("/productos") ##permitir obtener todos los usuarios
+@app.get("/productos")
 def obtener_productos():
     return tienda_service.tienda.productos
 
-
-@app.post("/anadirCarrito") #permitir realizar una compra
+@app.post("/anadirCarrito")
 def realizar_compra(usuario_nombre: str,skuproducto:str, cantidad: int):
     respuesta = tienda_service.anadir_producto_carrito(usuario_nombre, skuproducto, cantidad)
     if respuesta:
@@ -41,19 +40,19 @@ def realizar_compra(usuario_nombre: str,skuproducto:str, cantidad: int):
     else:
         return {"error": "No se pudo agregar el producto al carrito"}
 
-@app.delete("/eliminarProductCarrito") #permitir eliminar un producto del carrito
+@app.delete("/eliminarProductCarrito")
 def eliminar_producto_carrito(usuario_nombre: str, skuproducto:str):
     return tienda_service.eliminar_producto_carrito(usuario_nombre, skuproducto)
 
 
-@app.get("/user/carrito") #permitir obtener el carrito de un usuario
+@app.get("/user/carrito")
 def obtener_carrito(usuario_nombre: str):
     usuario = tienda_service.obtener_usuario(usuario_nombre)
     if usuario:
         return usuario
     return {"error": "Usuario no encontrado"}
 
-@app.post("/finalizarCompra") #permitir finalizar la compra
+@app.post("/finalizarCompra")
 def finalizar_compra(usuario_nombre: str):
     usuario = tienda_service.obtener_usuario(usuario_nombre)
     if usuario:
