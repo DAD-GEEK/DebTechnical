@@ -1,5 +1,4 @@
 from reglas.regla_precio import ReglaPrecio
-
 class ReglaPrecioEspecial(ReglaPrecio):
     def es_aplicable(self, sku):
         return sku.startswith("SP")
